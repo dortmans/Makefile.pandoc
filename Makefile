@@ -62,3 +62,12 @@ $(BUILD_DIR)/%.html: %.markdown
 
 clean:
 	@rm -rf $(BUILD_DIR)
+
+# EXPERIMENTAL! Publish to our corporate Wiki (using the script mwupdate)
+# WARNING! This is a one-way process, no changes are pulled from the wiki.
+# If you're now careful, you'll override somebody else's edits.
+#
+# Usage: make DocumentName.wiki
+# If the DocumentName page doesn't exist, it will be created.
+%.wiki: $(BUILD_DIR)/%.mediawiki
+	@cat $< | mwupdate $(patsubst %.wiki,%,$@)
